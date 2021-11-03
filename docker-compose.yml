@@ -84,3 +84,13 @@ services:
     ports:
       - "7000:3000"
     restart: always
+
+  # REVOLT voice server (Vortex)
+  vortex:
+    image: revoltchat/vortex:0.3.0-alpha.1
+    env_file: .env
+    ports:
+      - "8080:8080/tcp"
+      - "$RTC_MIN_PORT-$RTC_MAX_PORT:$RTC_MIN_PORT-$RTC_MAX_PORT/tcp"
+      - "$RTC_MIN_PORT-$RTC_MAX_PORT:$RTC_MIN_PORT-$RTC_MAX_PORT/udp"
+    restart: always
