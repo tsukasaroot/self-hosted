@@ -1,0 +1,54 @@
+################################################################################################################
+# Revolt's Apache configuration
+<VirtualHost *:80>
+	ServerName revolt.com
+	Redirect permanent / https://revolt.com/
+</VirtualHost>
+
+
+<VirtualHost *:443>
+	ServerName revolt.com
+
+	SSLEngine on
+	SSLCertificateFile "/certs/unified.cert"
+	SSLCertificateKeyFile "/certs/decryped-private.key"
+	SSLCertificateChainFile "/certs/ca.crt"
+	
+	<Location "/">
+		ProxyPreserveHost On
+	  ProxyPass http://localhost:5000/
+	</Location>
+	
+	<Location "/api">
+    ProxyPreserveHost On
+		ProxyPass http://localhost:8000/
+	</Location>
+	
+	<Location "/autumn/">
+	  ProxyPreserveHost On
+		ProxyPass http://localhost:3000/
+	</Location>
+
+	<Location "/january">
+	  ProxyPreserveHost On
+		ProxyPass http://localhost:7000/
+	</Location>
+
+	<Location "/ws">
+		ProxyPreserveHost On
+		ProxyPass ws://localhost:9000/
+		ProxyPassReverse ws://localhost:9000/
+	</Location>
+	
+	<Location "/vortex/">
+		ProxyPreserveHost On
+		ProxyPass http://localhost:8080/
+	</Location>
+	
+	<Location "/vortex-ws">
+		ProxyPreserveHost On
+		ProxyPass ws://localhost:8080/
+		ProxyPassReverse ws://localhost:8080/
+	</Location>
+</VirtualHost>
+################################################################################################################
